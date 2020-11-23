@@ -11,6 +11,7 @@
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../ejemplo-slots.html">
+    <link rel="import" href="../ejemplo-slots-2.html">
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -22,7 +23,14 @@
       <h3>Basic ejemplo-slots demo</h3>
       <demo-snippet>
         <template>
-          <ejemplo-slots></ejemplo-slots>
+          <h2>Ejemplo 1</h2>
+          <ejemplo-slots name="Super Nombre"></ejemplo-slots>
+          <h2>Ejemplo 2</h2>
+          <ejemplo-slots-2 name-two-way="EnriqueDesdeHost"></ejemplo-slots-2>
+          <script>
+            const ejemplo1 = document.querySelector('ejemplo-slots');
+            const ejemplo2 = document.querySelector('ejemplo-slots-2');
+          </script>
         </template>
       </demo-snippet>
     </div>

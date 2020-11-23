@@ -7,13 +7,27 @@
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <p>Nombre:[[name]] [[lastName]] [[surName]]</p>
+    <h3>name computado: [[nameComputed]]</h3>
+    <p>last Name computado: [[lastNameComputed]]</p>
+    <p>surName computado: [[surNameComputed]]</p>
+    <p>computed binding: [[_getFullName()]]</p>
+    <p>Aquí esta el arreglo</p>
+    <template is="dom-repeat" items="{{arreglo}}" as="empleado">
+      <div>{{empleado.id}}-{{empleado.info}}</div>
+      <button on-click="leDioClickItem">Ya le dio click</button>
+    </template>
+    <p>Aquí finaliza el arreglo</p>
+    <button on-click="leDioClick">Puchale</button>
+    <template is="dom-if" if="[[hastaCinco]]">
+      <h1>ME TENGO QUE PINTAR CUANDO ARRIBA EXISTAN 5</h1>
+    </template>
   </template>
 
   <script>
     /**
      * `ejemplo-slots`
-     * 
+     *
      *
      * @customElement
      * @polymer
@@ -23,11 +37,130 @@
       static get is() { return 'ejemplo-slots'; }
       static get properties() {
         return {
-          prop1: {
+          arreglo: {
+            type: Array,
+            value: () => ([])
+          },
+          hastaCinco: {
+            type: Boolean,
+            value: false
+          },
+          objeto: {
+            type: Object,
+            value: () => ({
+              name: 'Enrique',
+              lastName: 'Lopez'
+            })
+          },
+          name: {
             type: String,
-            value: 'ejemplo-slots'
+            value: 'Enrique',// default
+            observer: '_observaCambiosDeName'
+          },
+          lastName: {
+            type: String,
+            value: 'López'
+          },
+          surName: {
+            type: String,
+            value: 'Callejas'
+          },
+          propObject: {
+            type: Object,
+            value: () => ({})
+          },
+          nameComputed: {
+            type: String,
+            computed: '_nameComputed(name)'
+          },
+          lastNameComputed: {
+            type: String,
+            computed: '_lastName(lastName)'
+          },
+          surNameComputed: {
+            type: String,
+            computed: '_surNameComputed(surName)'
+          },
+          main: {
+            type: Array,
+            value: [
+              {
+                isWinner: true
+              }
+            ]
           }
         };
+      }
+
+      static get observers() {
+        return [
+          '_observaNombreCompleto(name, lastName, surName)',
+          '_observaObjeto(objeto.*)',
+          '_observaArreglo(arreglo.*)',
+        ];
+      }
+
+      leDioClick(e) {
+        this.set('name', 'Ricardo');
+        this.set('lastName', 'Ricardo');
+        this.push('arreglo', {
+          info: 'Lorem',
+          id: new Date().getTime()
+        });
+        if (this.arreglo.length > 4) {
+          this.set('hastaCinco', true);
+        }
+      }
+
+      leDioClickItem(e) {
+        console.log(e.model.empleado);
+        e.model.set('empleado.info', 'Nueva Info');
+        console.log(e.model.empleado);
+      }
+
+      _getFullName() {
+        return this.name + this.lastName + this.surName;
+      }
+
+      _observaNombreCompleto(name, lastName, surName) {
+        console.log(name, lastName, surName, 'Esto es desdel el observer');
+      }
+
+      _observaObjeto(objeto) {
+        console.log(objeto, 'Esto es el observer del objeto');
+      }
+      _observaArreglo(arreglo) {
+        console.log(arreglo, 'Esto es el observer del arreglo');
+      }
+
+      _observaCambiosDeName(newValue, oldValue) {
+        console.log(newValue, oldValue);
+      }
+
+      _nameComputed(name) {
+        console.log(name);
+        return 'nameComputed' + name;
+      }
+      _lastName(lastName) {
+        console.log(lastName);
+        return 'lastNameComputed' + lastName;
+      }
+      _surNameComputed(surName) {
+        console.log(surName);
+        return 'surNameComputed' + surName;
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        console.log('Objeto', this.objeto);
+        setTimeout(() => {
+          this.set('objeto.name', 'EnriqueLopez');
+        }, 3000);
+        this.arreglo.push({
+          info: 'Lorem',
+          id: 2
+        });
+        console.log('Cambios', this.arreglo);
       }
     }
 
