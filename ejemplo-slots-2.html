@@ -1,0 +1,48 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<dom-module id="ejemplo-slots-2">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    Ejemplo 2 [[nameTwoWay]]
+    <div></div>
+  </template>
+
+  <script>
+    /**
+     * `ejemplo-slots`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class EjemploSlots2 extends Polymer.Element {
+      static get is() { return 'ejemplo-slots-2'; }
+      static get properties() {
+        return {
+          nameTwoWay: {
+            type: String,
+            value: 'Enrique',// default
+            observer: '_observaCambiosDeName'
+          }
+        };
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+      }
+
+      _observaCambiosDeName(nameNew, nameOld) {
+        console.log('EjemploSlots2', nameNew, nameOld);
+      }
+    }
+
+    window.customElements.define(EjemploSlots2.is, EjemploSlots2);
+  </script>
+</dom-module>
