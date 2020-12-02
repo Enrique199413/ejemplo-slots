@@ -5,8 +5,12 @@
   <template>
     <style>
       :host {
-        display: block;
+        --custom-color-p: red;
       }
+      p {
+        color: var(--custom-color-p, cyan);
+      }
+
     </style>
     Ejemplo 2 [[nameTwoWay]]
     <div></div>

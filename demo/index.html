@@ -11,10 +11,25 @@
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../ejemplo-slots.html">
-    <link rel="import" href="../ejemplo-slots-2.html">
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
+        ejemplo-slots {
+          --custom-color-p: green;
+          --mixin-h3-styles: {
+            padding: 80px;
+            color: magenta;
+            border: 20px solid cyan;
+            cursor: pointer;
+            font-size: 10px;
+            border-radius: 10px;
+            box-shadow: 10px 10px 10px dimgray;
+          };
+        }
+
+        ejemplo-slots[strong] {
+          --custom-color-p: yellow;
+        }
       </style>
     </custom-style>
   </head>
@@ -25,8 +40,7 @@
         <template>
           <h2>Ejemplo 1</h2>
           <ejemplo-slots name="Super Nombre"></ejemplo-slots>
-          <h2>Ejemplo 2</h2>
-          <ejemplo-slots-2 name-two-way="EnriqueDesdeHost"></ejemplo-slots-2>
+          <ejemplo-slots name="Super Nombre" strong></ejemplo-slots>
           <script>
             const ejemplo1 = document.querySelector('ejemplo-slots');
             const ejemplo2 = document.querySelector('ejemplo-slots-2');

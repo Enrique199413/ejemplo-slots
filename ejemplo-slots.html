@@ -4,7 +4,20 @@
   <template>
     <style>
       :host {
-        display: block;
+        --custom-color-p: red;
+        --mixin-h3-styles: {
+          font-size: 80px;
+        }
+      }
+      p {
+        color: var(--custom-color-p, cyan);
+      }
+      h3 {
+        color: blue;
+        @apply --mixin-h3-styles;
+      }
+      :host([strong]) {
+        --custom-color-p: magenta;
       }
     </style>
     <p>Nombre:[[name]] [[lastName]] [[surName]]</p>
